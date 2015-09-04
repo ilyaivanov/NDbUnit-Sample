@@ -11,3 +11,4 @@ obj
 
 #Visual Studio
 *.suo
+NDbUnit-Sample.ncrunchsolution.user
