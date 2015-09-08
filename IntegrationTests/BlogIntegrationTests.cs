@@ -100,5 +100,79 @@ namespace IntegrationTests
 
         }
 
+        [Test]
+        public void ThereShouldBe5PostsAllInAll()
+        {
+            Database.SetInitializer(new TestInitializer());
+            using (var context = new BlogContext())
+            {
+                context.Database.Initialize(force: true);
+                Assert.That(context.Blogs.SelectMany(b=>b.Posts).Count(),Is.EqualTo(5));
+            }
+        }
+
+        [Test]
+        public void ItIsPossibleToChangePostTitle()
+        {
+            Database.SetInitializer(new TestInitializer());
+            using (var context = new BlogContext())
+            {
+                context.Database.Initialize(force: true);
+                var blog = context.Blogs.Include(b=>b.Posts).FirstOrDefault();
+                if (blog != null)
+                {
+                    var post = blog.Posts.FirstOrDefault();
+                    if (post != null) post.Title = "Lambda";
+                    context.SaveChanges();
+                }
+            }
+            using (var context = new BlogContext())
+            {
+                Assert.That(context.Blogs.SelectMany(b=>b.Posts).Count(p => p.Title=="Lambda"), Is.EqualTo(1));
+            }
+        }
+
+        [Test]
+        public void ItIsPossibleToAddPostToTheBlog()
+        {
+            Database.SetInitializer(new TestInitializer());
+            using (var context = new BlogContext())
+            {
+                context.Database.Initialize(force: true);
+                var blog = context.Blogs.FirstOrDefault();
+                if (blog != null)
+                {
+                   blog.Posts.Add(new Post {Title = "Lambda" });
+                   context.SaveChanges();
+                }
+            }
+            using (var context = new BlogContext())
+            {
+                Assert.That(context.Blogs.SelectMany(b => b.Posts).Count(), Is.EqualTo(6));
+            }
+        }
+
+        [Test]
+        public void ItIsPossibleToDeletePost()
+        {
+            Database.SetInitializer(new TestInitializer());
+            using (var context = new BlogContext())
+            {
+                context.Database.Initialize(force: true);
+                var blog = context.Blogs.Include(b=>b.Posts).FirstOrDefault();
+                if (blog != null)
+                {
+                    var post = blog.Posts.FirstOrDefault();
+                    blog.Posts.Remove(post);
+                    context.Entry(post).State = EntityState.Deleted;
+                    context.SaveChanges();
+                }
+            }
+            using (var context = new BlogContext())
+            {
+                Assert.That(context.Blogs.SelectMany(b => b.Posts).Count(), Is.EqualTo(4));
+            }
+        }
+
     }
 }

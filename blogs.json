@@ -1,10 +1,29 @@
 [
-	{
-		"Name":"Name 1",
-		"Text":"Text 1"
-	},
-	{
-		"Name":"Name 2",
-		"Text":"Text 2"
-	},
+  {
+    "BlogId": 1,
+    "Name": "Name 1",
+    "Text": "Text 1"
+  },
+
+  {
+    "BlogId": 2,
+    "Name": "Name 2",
+    "Text": "Text 2"
+  }
+] 
+[
+  {
+    "Name": "Name 1",
+    "Text": "Text 1",
+    "Posts": [
+      { "Title": "Title 1" },
+      { "Title": "Title 2" }
+    ]
+  },
+
+  {
+    "BlogId": 2,
+    "Name": "Name 2",
+    "Text": "Text 2"
+  }
 ]

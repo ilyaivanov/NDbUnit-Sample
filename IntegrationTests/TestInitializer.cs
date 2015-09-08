@@ -10,16 +10,32 @@ namespace IntegrationTests
     {
         protected override void Seed(BlogContext context)
         {
-            
-            using (StreamReader r = new StreamReader("D:\\NDbUnit-Sample\\blogs.json"))
+            var blogs = new List<Blog>
             {
-                string json = r.ReadToEnd();
-                var blogs = JsonConvert.DeserializeObject<List<Blog>>(json);
-                context.Blogs.AddRange(blogs);
-                base.Seed(context);
-            }
-
-
+                new Blog
+                {
+                    Name = "Name 1",
+                    Text = "Text 1",
+                    Posts =
+                    {
+                        new Post { Title = "Post 1"},
+                        new Post { Title = "Post 2"}
+                    }
+                },
+                new Blog
+                {
+                    Name = "Name 2",
+                    Text = "Text 2",
+                    Posts =
+                    {
+                        new Post { Title = "Post 3"},
+                        new Post { Title = "Post 4"},
+                        new Post { Title = "Post 5"}
+                    }
+                }
+            };
+            context.Blogs.AddRange(blogs);
+            base.Seed(context);
         }
     }
 }
