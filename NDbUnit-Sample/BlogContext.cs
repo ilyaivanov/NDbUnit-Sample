@@ -2,14 +2,15 @@
 
 namespace NDbUnit_Sample
 {
-        public class BlogContext : DbContext
-        {
-            public DbSet<Blog> Blogs { get; set; }
-        }
+    public class BlogContext : DbContext
+    {
+        public DbSet<Blog> Blogs { get; set; }
+    }
 
-        public class Blog
-        {
-            public int BlogId { get; set; }
-            public string Name { get; set; }
-        }
+    public class Blog
+    {
+        public int BlogId { get; set; }
+        public string Name { get; set; }
+        public string Text { get; set; }
+    }
 }
